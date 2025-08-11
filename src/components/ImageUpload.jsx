@@ -8,26 +8,92 @@ export default function ImageUpload({ onResult }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [useCamera, setUseCamera] = useState(false);
+  const [facingMode, setFacingMode] = useState("environment"); // back camera default
+  const [track, setTrack] = useState(null);
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const { i18n } = useTranslation();
 
-  // Start webcam when useCamera is true
+  // Start/Stop camera when useCamera or facingMode changes
   useEffect(() => {
     if (useCamera) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then((stream) => {
-          if (videoRef.current) videoRef.current.srcObject = stream;
-        })
-        .catch(() => setError('Camera access denied.'));
+      startCamera();
     } else {
-      const stream = videoRef.current?.srcObject;
-      if (stream) {
-        stream.getTracks().forEach((track) => track.stop());
-      }
+      stopCamera();
     }
-  }, [useCamera]);
+    // Cleanup on unmount
+    return () => stopCamera();
+    // eslint-disable-next-line
+  }, [useCamera, facingMode]);
+
+  const startCamera = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode,
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        }
+      });
+
+      const videoTrack = stream.getVideoTracks()[0];
+      setTrack(videoTrack);
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+      }
+
+      // Auto-enable torch in dark
+      if ("ImageCapture" in window) {
+        const imageCapture = new ImageCapture(videoTrack);
+        try {
+          const capabilities = await imageCapture.getPhotoCapabilities();
+          if (capabilities.torch) {
+            const lightLevel = await detectLightLevel();
+            if (lightLevel < 50) {
+              await videoTrack.applyConstraints({
+                advanced: [{ torch: true }]
+              });
+            }
+          }
+        } catch (err) {
+          console.warn("Torch not supported:", err);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Camera access denied.");
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoRef.current?.srcObject) {
+      videoRef.current.srcObject.getTracks().forEach((t) => t.stop());
+    }
+    setTrack(null);
+  };
+
+  // Detect average brightness from current frame
+  const detectLightLevel = async () => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (!videoRef.current) return resolve(100);
+
+      canvas.width = videoRef.current.videoWidth;
+      canvas.height = videoRef.current.videoHeight;
+      ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+
+      const frame = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      let total = 0;
+      for (let i = 0; i < frame.data.length; i += 4) {
+        total += frame.data[i] + frame.data[i + 1] + frame.data[i + 2];
+      }
+      const avg = total / (frame.data.length / 4) / 3;
+      resolve(avg);
+    });
+  };
 
   const handleCapture = () => {
     const video = videoRef.current;
@@ -100,12 +166,21 @@ export default function ImageUpload({ onResult }) {
         <>
           <video ref={videoRef} autoPlay playsInline className="w-full max-h-60 rounded" />
           <canvas ref={canvasRef} hidden />
-          <button
-            onClick={handleCapture}
-            className="mt-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded"
-          >
-            Capture Frame
-          </button>
+
+          <div className="mt-2 flex justify-center gap-2">
+            <button
+              onClick={handleCapture}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded"
+            >
+              Capture Frame
+            </button>
+            <button
+              onClick={() => setFacingMode(facingMode === "user" ? "environment" : "user")}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded"
+            >
+              Switch to {facingMode === "user" ? "Back" : "Front"} Camera
+            </button>
+          </div>
         </>
       ) : (
         <input
