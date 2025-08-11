@@ -1,0 +1,36 @@
+{
+  "wheat": {
+    "name": { "en": "Wheat", "hi": "गेहूं" },
+    "sowing": "November",
+    "growing": "December to February",
+    "harvesting": "March to April",
+    "region": ["Punjab", "Haryana", "Uttar Pradesh"],
+    "notes": {
+      "en": "Ensure timely irrigation during vegetative phase.",
+      "hi": "वनस्पति चरण में समय पर सिंचाई सुनिश्चित करें।"
+    }
+  },
+  "rice": {
+    "name": { "en": "Rice", "hi": "धान" },
+    "sowing": "June to July",
+    "growing": "August to September",
+    "harvesting": "October to November",
+    "region": ["West Bengal", "Chhattisgarh", "Odisha"],
+    "notes": {
+      "en": "Transplant seedlings after 20–25 days.",
+      "hi": "20–25 दिनों के बाद पौधों की रोपाई करें।"
+    }
+  },
+  "maize": {
+    "name": { "en": "Maize", "hi": "मक्का" },
+    "sowing": "June",
+    "growing": "July to August",
+    "harvesting": "September",
+    "region": ["Bihar", "Karnataka", "Andhra Pradesh"],
+    "notes": {
+      "en": "Watch for weed competition in early growth.",
+      "hi": "प्रारंभिक वृद्धि में खरपतवार प्रतिस्पर्धा पर ध्यान दें।"
+    }
+  }
+  
+}

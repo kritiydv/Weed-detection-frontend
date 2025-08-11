@@ -1,0 +1,68 @@
+{ "en": {
+    "home_title": "Welcome to WeedGuard",
+    "detect_button": "Detect Weeds Now",
+    "report_button": "Report a Weed",
+    "about_section": "About WeedGuard",
+    "how_it_works": "How it Works",
+    "features": "Features",
+    "feature_detection": "Accurate Weed Detection",
+    "feature_multilingual": "Multilingual Support",
+    "feature_expert": "Expert Advice",
+    "feature_voice": "Voice Output",
+    "footer_message": "Empowering Farmers with Technology",
+
+    "scientific_name": "Scientific Name",
+    "season": "Season",
+    "harmful": "Harmful",
+    "yes": "Yes",
+    "no": "No",
+    "precautions": "Precautions",
+    "eco_impact": "Eco Impact",
+    "organic_control": "Organic Control",
+    "herbicides": "Herbicides",
+    "affected_crops": "Affected Crops",
+    "common_states": "Common in States",
+     
+  "Crop Calendar": "Crop Calendar",
+  "Sowing": "Sowing",
+  "Growing": "Growing",
+  "Harvesting": "Harvesting",
+  "Regions": "Regions"
+},
+
+  
+  "nav": {
+    "home": "Home",
+    "detect": "Detect Weeds",
+    "calendar": "Crop Calendar",
+    "report": "Report Weed",
+    "experts": "Experts"
+  },
+  
+  "home": {
+    "welcome": "Welcome to WeedGuard 🌱",
+    "description": "Identify weeds in your field instantly, get expert advice, and plan your crops effectively.",
+    "detectButton": "Detect Weeds Now",
+    "features": {
+      "realtimeTitle": "Real-time Weed Detection",
+      "realtimeDesc": "Upload images and detect weeds with our AI-powered tool.",
+      "calendarTitle": "Crop Calendar",
+      "calendarDesc": "Plan your sowing and harvesting schedule based on your region.",
+      "expertTitle": "Expert Consultation",
+      "expertDesc": "Chat with agricultural experts for guidance on weed management."
+    },
+    "testimonial": {
+      "quote": "\"This app helped me reduce weed growth and increase my crop yield!\"",
+      "author": "– Ramesh, Farmer from Chhattisgarh"
+    },
+    "footer": "Need help? Call us at 1800-0000-0000 | © 2025 WeedGuard"
+  },
+  "detect": {
+    "bannerTitle": "🌿 Detect Weeds Instantly",
+    "uploadHeading": "Upload Image to Detect Weeds",
+    "annotatedImageAlt": "Annotated detection result",
+    "noWeeds": "No weeds detected or result format mismatch."
+  }
+ 
+
+}
