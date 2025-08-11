@@ -40,7 +40,7 @@ const Detect = () => {
             {results.annotated_image && (
               <div className="mb-4">
                 <img
-                  src={`http://localhost:5000/${results.annotated_image}`}
+                  src={`https://weed-detection-backend-2.onrender.com/${results.annotated_image}`}
                   alt={t('detect.annotatedImageAlt')}
                   className="max-w-full rounded shadow"
                 />
